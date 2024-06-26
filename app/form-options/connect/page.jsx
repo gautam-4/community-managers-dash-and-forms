@@ -28,6 +28,9 @@ function ConnectForm() {
     specialRequirements: '',
   });
 
+  //company of the user will be provided through their login credentials
+  const [userCompany, setUserCompany] = useState("Company A");
+
   useEffect(() => {
     const fetchHubs = async () => {
       try {
@@ -88,6 +91,9 @@ function ConnectForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const timestamp = new Date().toISOString();
+
     if(formData.hub === '' || formData.domain === '' || formData.subdomain === ''){
       alert('required fields not filled')
       return;
@@ -101,7 +107,9 @@ function ConnectForm() {
         delivery: formData.delivery,
         budget: formData.budget,
         specialRequirements: formData.specialRequirements,
-        //timestamp: Date.now().toString()
+        timestamp: timestamp,
+        isHandled: false,
+        company: userCompany
       });
       console.log(response.data);
       setFormData({
